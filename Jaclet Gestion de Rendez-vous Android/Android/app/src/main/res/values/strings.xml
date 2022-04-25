@@ -1,0 +1,54 @@
+<resources>
+
+    <string name="app_name">JACLETGestionRendezVous</string>
+
+    <string name="titre">Vos rendez-vous - Hôpital JACLET</string>
+    <string name="titre_patient">Mes rendez-vous</string>
+    <string name="titre_demande_rdv">Mes rendez-vous : Demande de rendez-vous</string>
+    <string name="titre_detail_rdv">Mes rendez-vous : Détail du rendez-vous</string>
+
+    <string name="login">Login : </string>
+    <string name="txt_login">Entrez votre login ici</string>
+
+    <string name="mdp">Mot de passe : </string>
+    <string name="txt_mdp">Entrez votre mot de passe</string>
+
+    <string name="btn_valider">Connexion</string>
+    <string name="btn_valider_rdv">Valider rendez-vous</string>
+    <string name="btn_valider_indispo">Valider rendez-vous</string>
+
+    <string name="btn_demande_rdv">Demande de RDV</string>
+    <string name="btn_afficher_mes_rdv">Afficher mes RDV</string>
+    <string name="btn_afficher_un_rdv">Détails du RDV</string>
+    <string name="btn_annuler_un_rdv">Annuler un RDV</string>
+
+    <string name="btn_indispos">Gérer Indisponibilités</string>
+
+    <string name="btn_ok">OK</string>
+
+    <string name="service">Service : </string>
+
+    <string name="medecin">Médecin : </string>
+
+    <string name="date_rdv">Date du rendez-vous : </string>
+    <string name="select_date">Sélectionnez une date</string>
+
+    <string name="heure_rdv">Heure du rendez-vous : </string>
+    <string name="select_heure">Sélectionnez une heure</string>
+
+    <string name="heure">Heure : </string>
+
+    <string name="date_indispo_debut">Date de début : </string>
+
+    <string name="date_indispo_fin">Date de fin : </string>
+
+    <string name="precisions">Précisions à apporter : </string>
+    <string name="txt_precisions">Saisissez la/les précision(s)</string>
+
+    <string name="precisions_apportees">Précisions apportées : </string>
+
+    <string name="affichage_connexion">Je suis connecté en tant que </string>
+
+    <string name="motif">Motif : </string>
+
+</resources>
