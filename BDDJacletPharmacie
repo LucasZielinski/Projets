@@ -1,0 +1,769 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.4.19
+-- Dumped by pg_dump version 11.1
+
+-- Started on 2022-04-01 09:32:47
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 179 (class 1259 OID 55846)
+-- Name: commandes; Type: TABLE; Schema: public; Owner: guichard
+--
+
+CREATE TABLE public.commandes (
+    id_commande integer NOT NULL,
+    id_fournisseur integer,
+    date character varying(10),
+    id_employe integer
+);
+
+
+ALTER TABLE public.commandes OWNER TO guichard;
+
+--
+-- TOC entry 183 (class 1259 OID 56695)
+-- Name: commandes_id_seq; Type: SEQUENCE; Schema: public; Owner: guichard
+--
+
+CREATE SEQUENCE public.commandes_id_seq
+    START WITH 21
+    INCREMENT BY 1
+    MINVALUE 21
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.commandes_id_seq OWNER TO guichard;
+
+--
+-- TOC entry 2086 (class 0 OID 0)
+-- Dependencies: 183
+-- Name: commandes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: guichard
+--
+
+ALTER SEQUENCE public.commandes_id_seq OWNED BY public.commandes.id_commande;
+
+
+--
+-- TOC entry 176 (class 1259 OID 55811)
+-- Name: demandes; Type: TABLE; Schema: public; Owner: guichard
+--
+
+CREATE TABLE public.demandes (
+    id_demande integer NOT NULL,
+    id_employe integer,
+    date character varying(10),
+    valide integer
+);
+
+
+ALTER TABLE public.demandes OWNER TO guichard;
+
+--
+-- TOC entry 184 (class 1259 OID 56698)
+-- Name: demandes_id_seq; Type: SEQUENCE; Schema: public; Owner: guichard
+--
+
+CREATE SEQUENCE public.demandes_id_seq
+    START WITH 11
+    INCREMENT BY 1
+    MINVALUE 11
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.demandes_id_seq OWNER TO guichard;
+
+--
+-- TOC entry 2087 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: demandes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: guichard
+--
+
+ALTER SEQUENCE public.demandes_id_seq OWNED BY public.demandes.id_demande;
+
+
+--
+-- TOC entry 180 (class 1259 OID 55856)
+-- Name: detail_commandes; Type: TABLE; Schema: public; Owner: guichard
+--
+
+CREATE TABLE public.detail_commandes (
+    id_commande integer NOT NULL,
+    id_medoc integer NOT NULL,
+    qt integer
+);
+
+
+ALTER TABLE public.detail_commandes OWNER TO guichard;
+
+--
+-- TOC entry 177 (class 1259 OID 55821)
+-- Name: detail_demandes; Type: TABLE; Schema: public; Owner: guichard
+--
+
+CREATE TABLE public.detail_demandes (
+    id_demande integer NOT NULL,
+    id_medoc integer NOT NULL,
+    qt integer
+);
+
+
+ALTER TABLE public.detail_demandes OWNER TO guichard;
+
+--
+-- TOC entry 174 (class 1259 OID 55796)
+-- Name: employes; Type: TABLE; Schema: public; Owner: guichard
+--
+
+CREATE TABLE public.employes (
+    id_employe integer NOT NULL,
+    nom character varying(40),
+    prenom character varying(40),
+    age integer,
+    login character varying(40),
+    mdp character varying(100),
+    id_service integer,
+    role character varying(20)
+);
+
+
+ALTER TABLE public.employes OWNER TO guichard;
+
+--
+-- TOC entry 186 (class 1259 OID 57275)
+-- Name: employe_id_seq; Type: SEQUENCE; Schema: public; Owner: guichard
+--
+
+CREATE SEQUENCE public.employe_id_seq
+    START WITH 4
+    INCREMENT BY 1
+    MINVALUE 4
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.employe_id_seq OWNER TO guichard;
+
+--
+-- TOC entry 2088 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: employe_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: guichard
+--
+
+ALTER SEQUENCE public.employe_id_seq OWNED BY public.employes.id_employe;
+
+
+--
+-- TOC entry 178 (class 1259 OID 55836)
+-- Name: fournisseur; Type: TABLE; Schema: public; Owner: guichard
+--
+
+CREATE TABLE public.fournisseur (
+    id_fournisseur integer NOT NULL,
+    nom character varying(40),
+    rue character varying(40),
+    cp character varying(5),
+    ville character varying(40),
+    telephone character varying(10)
+);
+
+
+ALTER TABLE public.fournisseur OWNER TO guichard;
+
+--
+-- TOC entry 182 (class 1259 OID 56665)
+-- Name: fournisseur_id_seq; Type: SEQUENCE; Schema: public; Owner: guichard
+--
+
+CREATE SEQUENCE public.fournisseur_id_seq
+    START WITH 6
+    INCREMENT BY 1
+    MINVALUE 6
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.fournisseur_id_seq OWNER TO guichard;
+
+--
+-- TOC entry 2089 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: fournisseur_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: guichard
+--
+
+ALTER SEQUENCE public.fournisseur_id_seq OWNED BY public.fournisseur.id_fournisseur;
+
+
+--
+-- TOC entry 175 (class 1259 OID 55806)
+-- Name: medicaments; Type: TABLE; Schema: public; Owner: guichard
+--
+
+CREATE TABLE public.medicaments (
+    id_medoc integer NOT NULL,
+    libelle character varying(40),
+    description character varying(200),
+    stock integer,
+    localisation character varying(40)
+);
+
+
+ALTER TABLE public.medicaments OWNER TO guichard;
+
+--
+-- TOC entry 185 (class 1259 OID 57185)
+-- Name: medicament_id_seq; Type: SEQUENCE; Schema: public; Owner: guichard
+--
+
+CREATE SEQUENCE public.medicament_id_seq
+    START WITH 4
+    INCREMENT BY 1
+    MINVALUE 4
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.medicament_id_seq OWNER TO guichard;
+
+--
+-- TOC entry 2090 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: medicament_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: guichard
+--
+
+ALTER SEQUENCE public.medicament_id_seq OWNED BY public.medicaments.id_medoc;
+
+
+--
+-- TOC entry 181 (class 1259 OID 55924)
+-- Name: role; Type: TABLE; Schema: public; Owner: guichard
+--
+
+CREATE TABLE public.role (
+    role character varying(20) NOT NULL
+);
+
+
+ALTER TABLE public.role OWNER TO guichard;
+
+--
+-- TOC entry 173 (class 1259 OID 55791)
+-- Name: services; Type: TABLE; Schema: public; Owner: guichard
+--
+
+CREATE TABLE public.services (
+    id_service integer NOT NULL,
+    libelle character varying(40)
+);
+
+
+ALTER TABLE public.services OWNER TO guichard;
+
+--
+-- TOC entry 1929 (class 2604 OID 56697)
+-- Name: commandes id_commande; Type: DEFAULT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.commandes ALTER COLUMN id_commande SET DEFAULT nextval('public.commandes_id_seq'::regclass);
+
+
+--
+-- TOC entry 1927 (class 2604 OID 56700)
+-- Name: demandes id_demande; Type: DEFAULT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.demandes ALTER COLUMN id_demande SET DEFAULT nextval('public.demandes_id_seq'::regclass);
+
+
+--
+-- TOC entry 1925 (class 2604 OID 57277)
+-- Name: employes id_employe; Type: DEFAULT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.employes ALTER COLUMN id_employe SET DEFAULT nextval('public.employe_id_seq'::regclass);
+
+
+--
+-- TOC entry 1928 (class 2604 OID 56667)
+-- Name: fournisseur id_fournisseur; Type: DEFAULT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.fournisseur ALTER COLUMN id_fournisseur SET DEFAULT nextval('public.fournisseur_id_seq'::regclass);
+
+
+--
+-- TOC entry 1926 (class 2604 OID 57187)
+-- Name: medicaments id_medoc; Type: DEFAULT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.medicaments ALTER COLUMN id_medoc SET DEFAULT nextval('public.medicament_id_seq'::regclass);
+
+
+--
+-- TOC entry 2072 (class 0 OID 55846)
+-- Dependencies: 179
+-- Data for Name: commandes; Type: TABLE DATA; Schema: public; Owner: guichard
+--
+
+COPY public.commandes (id_commande, id_fournisseur, date, id_employe) FROM stdin;
+3	3	17-09-2021	3
+6	2	22-09-2021	1
+7	2	22-09-2021	1
+8	2	22-09-2021	1
+9	1	22-05-2021	2
+4	1	22-01-2021	2
+5	1	22-01-2021	2
+1	2	05/10/2021	2
+15	2	12/10/2021	1
+16	2	2021-10-12	2
+20	3	2021-10-12	1
+2	2	2021-10-19	1
+21	1	2021-10-22	1
+22	5	2021-10-22	11
+23	1	2022-03-25	1
+24	1	2022-03-25	1
+\.
+
+
+--
+-- TOC entry 2069 (class 0 OID 55811)
+-- Dependencies: 176
+-- Data for Name: demandes; Type: TABLE DATA; Schema: public; Owner: guichard
+--
+
+COPY public.demandes (id_demande, id_employe, date, valide) FROM stdin;
+5	1	01-10-2021	2
+6	2	01-10-2021	2
+10	1	05-10-2021	1
+12	2	2021-10-22	0
+13	2	2021-10-22	0
+14	3	2022-03-18	0
+11	1	2021-10-19	1
+2	1	01-10-2021	1
+15	3	2022-03-18	2
+19	1	2022-03-24	0
+20	1	2022-03-24	0
+22	1	2022-03-24	0
+23	1	2022-03-24	0
+24	1	2022-03-24	0
+25	1	2022-03-24	0
+26	1	2022-03-24	0
+27	1	2022-03-24	0
+28	1	2022-03-24	0
+29	3	2022-03-25	0
+\.
+
+
+--
+-- TOC entry 2073 (class 0 OID 55856)
+-- Dependencies: 180
+-- Data for Name: detail_commandes; Type: TABLE DATA; Schema: public; Owner: guichard
+--
+
+COPY public.detail_commandes (id_commande, id_medoc, qt) FROM stdin;
+9	2	5
+1	1	50
+15	1	50
+16	2	50
+20	2	50
+20	1	40
+2	2	50
+3	3	50
+21	1	25
+22	6	12
+23	1	10
+24	1	10
+\.
+
+
+--
+-- TOC entry 2070 (class 0 OID 55821)
+-- Dependencies: 177
+-- Data for Name: detail_demandes; Type: TABLE DATA; Schema: public; Owner: guichard
+--
+
+COPY public.detail_demandes (id_demande, id_medoc, qt) FROM stdin;
+27	1	10
+28	1	10
+29	1	20
+5	2	24
+2	2	5
+6	2	5
+10	1	5
+11	3	4
+\.
+
+
+--
+-- TOC entry 2067 (class 0 OID 55796)
+-- Dependencies: 174
+-- Data for Name: employes; Type: TABLE DATA; Schema: public; Owner: guichard
+--
+
+COPY public.employes (id_employe, nom, prenom, age, login, mdp, id_service, role) FROM stdin;
+14	Calandreau	Raphael	46	Calandreau	$2a$12$CsN/4N0yMm.jzpi4JUAH/OHlzNwaaf.tNDB9Izk6Io55qFY1ICFc2	5	pharmacien
+5	Theuri	James	30	Theuri	$2a$12$CsN/4N0yMm.jzpi4JUAH/Oi010D9uWC8UTAO.m93HiOe0uXCsVpbS	4	infirmier
+6	Lefrand	Stephane	50	Lefrand	$2a$12$CsN/4N0yMm.jzpi4JUAH/OCzoW3hlGNOcK0L1dUbYlg1cNfnT6N4a	5	infirmier
+7	Bouloukane	Sofianne	42	Bouloukane	$2a$12$CsN/4N0yMm.jzpi4JUAH/Oy6eTjiCNRiyN7/SzxiSAqgxHvaI3lDm	6	infirmier
+8	Hsain	Moundir	48	Hsain	$2a$12$CsN/4N0yMm.jzpi4JUAH/Oprv6Z8Zy2aXCM0Q0DYRJEUL1AzvXw2e	7	infirmier
+9	Thomas	Yoahn	60	Thomas	$2a$12$CsN/4N0yMm.jzpi4JUAH/OUhLhRrKO3tvzN4IGHWQtAu1dn3Q22Xq	8	infirmier
+10	Duchamp	Felix	26	Duchamp	$2a$12$CsN/4N0yMm.jzpi4JUAH/OtSrfP0u6pR.EKtrsm5BTS6fSCKlNKVO	1	pharmacien
+11	Beugnot	Gregory	26	Beugnot	$2a$12$CsN/4N0yMm.jzpi4JUAH/OTOJBXewJJpX4VmEnSJ2T4IhuhZGY45W	2	pharmacien
+4	Doe	John	25	Doe	$2a$12$CsN/4N0yMm.jzpi4JUAH/ONoGkL7VwnPI7gXPVfyWSAt32khNwSTa	3	pharmacien
+13	Beugnet	Gregoire	26	Beugnet	$2a$12$CsN/4N0yMm.jzpi4JUAH/OHkL2P66voaz6XsPRAECmPNi23zIADdK	4	pharmacien
+15	Petel	Aymeric	38	Petel	$2a$12$CsN/4N0yMm.jzpi4JUAH/OaYlgFPkat2cc7di1DEP5bIf6qtCSAPq	6	pharmacien
+16	Bartoli	Julien	38	Bartoli	$2a$12$CsN/4N0yMm.jzpi4JUAH/OJa9utKThEvEa6kdPNy2g5Q81JlKLl1O	7	pharmacien
+17	Guichard	Thomas	18	Guichard	$2a$12$CsN/4N0yMm.jzpi4JUAH/O4//tDURUnn0FvaSs/Sh0X/QUPfM8HYS	8	pharmacien
+3	Jean	Jean-Jacques	35	Jean	$2a$12$CsN/4N0yMm.jzpi4JUAH/Ozlr9rs0MubEGARFIoH5WfGnWt.1Lxnu	1	infirmier
+1	Jaclet	François	42	Jaclet	$2a$12$CsN/4N0yMm.jzpi4JUAH/O7rrH2vEMF7VWWuXSy2RAuMY4457xekS	2	infirmier
+2	Dubois	Jacques	52	Dubois	$2a$12$CsN/4N0yMm.jzpi4JUAH/OwV0c357fP8miYkrzrPkaKzAXlpTKrMO	3	infirmier
+\.
+
+
+--
+-- TOC entry 2071 (class 0 OID 55836)
+-- Dependencies: 178
+-- Data for Name: fournisseur; Type: TABLE DATA; Schema: public; Owner: guichard
+--
+
+COPY public.fournisseur (id_fournisseur, nom, rue, cp, ville, telephone) FROM stdin;
+2	Medoc' Nord	78 Avenue Louis XIV	59200	Tourcoing	0956875241
+3	Healthy	48 rue Du Potager	59100	Lille	0348759614
+1	Pharmatica	15 rue Albert 1er	59170	Roubaix	0325487596
+4	Himaya.ma	26 rue des Brebis	59200	Tourcoing	0123456789
+5	ACQ Science	85 rue de Lille	59100	Lille	0954786231
+6	Brothier	93 rue de la Science	59170	Roubaix	0978956231
+7	Horizane	3 rue de la Croix	59200	Tourcoing	0845871542
+8	Pharmaturca	78 rue des Boeufs	59170	Roubaix	0723154541
+9	CBD VAP	420 rue des Plantes	59200	Tourcoing	0420420420
+10	Labkaps	20 rue de la Nature	59100	Lille	0325486971
+11	ASN Trans	40 rue des Camions	59200	Tourcoing	0658748951
+12	Tijara	78 avenue Aubervilliers	59100	Lille	0489562317
+13	Tranker	48 rue de Mouscron	59200	Tourcoing	0658974561
+14	Muller	78 rue de Bayern	59100	Lille	0487956231
+15	Grocky	93 rue de la Graisse	59170	Roubaix	0978456123
+16	Seif	1 rue des Chiens	59170	Roubaix	0615789545
+17	MediKamel	6 rue des Pierres	59100	Lille	0489561278
+18	Biohealth	20 rue de la Santé	59200	Tourcoing	0878459623
+19	Corona	20 rue du Virus	59170	Roubaix	0658794512
+20	Desperados	14 rue de la Soif	59100	Lille	0784596231
+21	Sydella	21 rue Leclerc	59170	Roubaix	0684953214
+22	Intersurgical	38 rue Morandi	59100	Lille	0784562315
+23	Portakabin	83 rue de la Belgique	59200	Tourcoing	0658492315
+24	Clinpharma	3 rue des Raviolis	59170	Roubaix	0785963214
+25	Siliris	20 rue Albert	59170	Roubaix	0875412635
+\.
+
+
+--
+-- TOC entry 2068 (class 0 OID 55806)
+-- Dependencies: 175
+-- Data for Name: medicaments; Type: TABLE DATA; Schema: public; Owner: guichard
+--
+
+COPY public.medicaments (id_medoc, libelle, description, stock, localisation) FROM stdin;
+2	Doliprane	Ce médicament est un antalgique et un antipyrétique qui contient du paracétamol.	10	3A
+26	Deroxat	Ce médicament est un omprimé pelliculé sécable appartient à la classe de médicaments appelés Inhibiteurs Sélectifs de la Recapture de la Sérotonine (ISRS).	5	3A
+27	Temesta	Ce médicament est préconisé dans le traitement de l'anxiété lorsque celle-ci s'accompagne de troubles gênants, ou en prévention et/ou traitement des manifestations liées à un sevrage alcoolique.	7	4A
+28	Effexor	Ce médicament est une gélule à libération prolongée est un antidépresseur appartenant à un groupe de médicaments appelés inhibiteurs de recapture de la sérotonine et de la noradrénaline (IRSNA)	18	2B
+3	Spasfon	Ce médicament est un antispasmodique. Il lutte contre les contractions anormales et douloureuses de l'estomac.	100	1D
+4	Dafalgan	Ce médicament contient du paracétamol : un antalgique (il calme la douleur) et un antipyrétique (il fait baisser la fièvre).	36	5A
+1	Efferalgan	Ce médicament contient du paracétamol : un antalgique (il calme la douleur) et un antipyrétique ( il fait baisser la fièvre).	30	2C
+5	Isimig	C'est un médicament pour traiter les maux de tête dans la crise de migraine avec ou sans aura (sensation subjective passagère qui précède la crise de migraine, très variable d'un sujet à l'autre et qu	12	5B
+14	Gaviscon	Ce médicament est indiqué dans le traitement du reflux gastro-oesophagien qui se traduit par des brûlures d’estomac (pyrosis), des remontées ou renvois acides et des aigreurs d’estomac.	14	6A
+15	Daflon	Ce médicament est un veinotonique (il augmente le tonus des veines), et un vasculoprotecteur (il augmente la résistance des petits vaisseaux sanguins).	7	8A
+16	Toplexil	Ce médicament est un antitussif appartenant à la famille des antihistaminiques de type neuroleptique phénothiazinique. Il s'oppose aux effets de l'histamine notamment sur les bronches. Il est préconis	9	8A
+17	Mopral	Ce médicament est une gélule gastro-résistante contient la substance active oméprazole. Il appartient à la classe des médicaments appelée inhibiteurs de la pompe à protons. Il diminue la quantité d’ac	8	4B
+18	Pneumorel	Ce médicament est préconisé dans le traitement de la toux et de l'expectoration au cours des affections bronchopulmonaires.	52	3C
+19	Subutex	Ce comprimé sublingual est utilisé pour traiter la dépendance aux opioïdes (stupéfiants). Ce médicament est exclusivement réservé au traitement de substitution des pharmacodépendances, dans le cadre d	32	7A
+20	Inexium	Ce médicament contient une substance appelée ésoméprazole. C’est un médicament de la classe des inhibiteurs de la pompe à protons. Il diminue la sécrétion acide au niveau de l'estomac.	14	7C
+21	Advil	Ce médicament contient un anti-inflammatoire non stéroïdien : l’ibuprofène.	12	1A
+22	Augmentin	Ce médicament est un antibiotique qui tue les bactéries responsables des infections. Il contient deux molécules différentes, appelées amoxicilline et acide clavulanique	17	1B
+23	Vastarel	Ce médicament est préconisé chez l’adulte en association à d’autres médicaments, dans le traitement de l’angine de poitrine (douleur de la poitrine due à une maladie coronarienne).	18	1C
+24	Dexeryl	Cette crème agit au niveau de la peau d’une part en augmentant son niveau d’hydratation, grâce au glycérol, d’autre part en restaurant la fonction barrière de la peau, grâce à la vaseline et à la para	28	1D
+25	Xanax	Ce médicament est préconisé dans le traitement de l'anxiété lorsque celle-ci s'accompagne de troubles gênants, ou en prévention et/ou traitement des manifestations liées à un sevrage alcoolique.	10	2A
+29	Celestene	Ce médicament est un corticoïde. II est indiqué dans certaines maladies, où il est utilisé pour son effet anti-inflammatoire.	69	9C
+30	Atarax	Ce médicament est préconisé dans les manifestations mineures d'anxiété chez l’adulte en prémédication avant anesthésie générale, dans l'urticaire, ainsi que dans le traitement de certaines insomnies	78	3B
+6	Kardegic	Ce médicament est une poudre pour solution buvable en sachet-dose est utilisé pour prévenir les récidives d’accidents vasculaires cérébraux ou cardiaques provoqués par des caillots dans les artères du	14	6E
+7	Volaterene	Ce médicament est un anti-inflammatoire et un antalgique (il calme la douleur), sous forme de gel pour application sur la peau, uniquement au niveau de la région douloureuse.	18	2E
+13	Lamaline	c'est cool	22	8E
+8	Spedifen	Ce médicament contient un anti-inflammatoire non stéroïdien : l'ibuprofène. Il est indiqué dans le traitement de courte durée de la fièvre et/ou des douleurs telles que maux de tête, états grippaux, d	25	3C
+9	Eludril	Ce médicament est une association de 2 antiseptiques (le digluconate de chlorhexidine et le chlorobutanol hémihydraté) qui agit en luttant contre les bactéries présentes sur les dents (plaque bactérie	21	6C
+10	Ixprim	Ce médicament est une association de 2 antalgiques, le tramadol et le paracétamol, qui agissent ensemble pour soulager votre douleur.	5	4D
+11	Forlax	Ce médicament sous forme de poudre est indiqué pour le traitement de la constipation.	16	8E
+12	Clamoxyl	Ce médicament est un antibiotique. Le principe actif est l’amoxicilline. Celui-ci appartient à un groupe de médicaments appelés « pénicillines ».	11	9L
+\.
+
+
+--
+-- TOC entry 2074 (class 0 OID 55924)
+-- Dependencies: 181
+-- Data for Name: role; Type: TABLE DATA; Schema: public; Owner: guichard
+--
+
+COPY public.role (role) FROM stdin;
+infirmier
+pharmacien
+\.
+
+
+--
+-- TOC entry 2066 (class 0 OID 55791)
+-- Dependencies: 173
+-- Data for Name: services; Type: TABLE DATA; Schema: public; Owner: guichard
+--
+
+COPY public.services (id_service, libelle) FROM stdin;
+1	Cardiologie
+2	Podologie
+3	Pediatrie
+4	Reanimation
+5	Oncologie
+6	Réeducation
+7	Gériatrie
+8	Neurologie
+\.
+
+
+--
+-- TOC entry 2091 (class 0 OID 0)
+-- Dependencies: 183
+-- Name: commandes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: guichard
+--
+
+SELECT pg_catalog.setval('public.commandes_id_seq', 24, true);
+
+
+--
+-- TOC entry 2092 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: demandes_id_seq; Type: SEQUENCE SET; Schema: public; Owner: guichard
+--
+
+SELECT pg_catalog.setval('public.demandes_id_seq', 29, true);
+
+
+--
+-- TOC entry 2093 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: employe_id_seq; Type: SEQUENCE SET; Schema: public; Owner: guichard
+--
+
+SELECT pg_catalog.setval('public.employe_id_seq', 25, true);
+
+
+--
+-- TOC entry 2094 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: fournisseur_id_seq; Type: SEQUENCE SET; Schema: public; Owner: guichard
+--
+
+SELECT pg_catalog.setval('public.fournisseur_id_seq', 27, true);
+
+
+--
+-- TOC entry 2095 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: medicament_id_seq; Type: SEQUENCE SET; Schema: public; Owner: guichard
+--
+
+SELECT pg_catalog.setval('public.medicament_id_seq', 31, true);
+
+
+--
+-- TOC entry 1943 (class 2606 OID 55850)
+-- Name: commandes commandes_pkey; Type: CONSTRAINT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.commandes
+    ADD CONSTRAINT commandes_pkey PRIMARY KEY (id_commande);
+
+
+--
+-- TOC entry 1937 (class 2606 OID 55815)
+-- Name: demandes demandes_pkey; Type: CONSTRAINT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.demandes
+    ADD CONSTRAINT demandes_pkey PRIMARY KEY (id_demande);
+
+
+--
+-- TOC entry 1945 (class 2606 OID 55860)
+-- Name: detail_commandes detail_commandes_pkey; Type: CONSTRAINT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.detail_commandes
+    ADD CONSTRAINT detail_commandes_pkey PRIMARY KEY (id_commande, id_medoc);
+
+
+--
+-- TOC entry 1939 (class 2606 OID 55825)
+-- Name: detail_demandes detail_demandes_pkey; Type: CONSTRAINT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.detail_demandes
+    ADD CONSTRAINT detail_demandes_pkey PRIMARY KEY (id_demande, id_medoc);
+
+
+--
+-- TOC entry 1933 (class 2606 OID 55800)
+-- Name: employes employes_pkey; Type: CONSTRAINT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.employes
+    ADD CONSTRAINT employes_pkey PRIMARY KEY (id_employe);
+
+
+--
+-- TOC entry 1941 (class 2606 OID 55840)
+-- Name: fournisseur fournisseur_pkey; Type: CONSTRAINT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.fournisseur
+    ADD CONSTRAINT fournisseur_pkey PRIMARY KEY (id_fournisseur);
+
+
+--
+-- TOC entry 1935 (class 2606 OID 55810)
+-- Name: medicaments medicaments_pkey; Type: CONSTRAINT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.medicaments
+    ADD CONSTRAINT medicaments_pkey PRIMARY KEY (id_medoc);
+
+
+--
+-- TOC entry 1947 (class 2606 OID 55928)
+-- Name: role role_pkey; Type: CONSTRAINT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.role
+    ADD CONSTRAINT role_pkey PRIMARY KEY (role);
+
+
+--
+-- TOC entry 1931 (class 2606 OID 55795)
+-- Name: services services_pkey; Type: CONSTRAINT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.services
+    ADD CONSTRAINT services_pkey PRIMARY KEY (id_service);
+
+
+--
+-- TOC entry 1954 (class 2606 OID 55871)
+-- Name: commandes commandes_id_employe_fkey; Type: FK CONSTRAINT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.commandes
+    ADD CONSTRAINT commandes_id_employe_fkey FOREIGN KEY (id_employe) REFERENCES public.employes(id_employe) NOT VALID;
+
+
+--
+-- TOC entry 1953 (class 2606 OID 55851)
+-- Name: commandes commandes_id_fournisseur_fkey; Type: FK CONSTRAINT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.commandes
+    ADD CONSTRAINT commandes_id_fournisseur_fkey FOREIGN KEY (id_fournisseur) REFERENCES public.fournisseur(id_fournisseur);
+
+
+--
+-- TOC entry 1950 (class 2606 OID 55816)
+-- Name: demandes demandes_id_employe_fkey; Type: FK CONSTRAINT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.demandes
+    ADD CONSTRAINT demandes_id_employe_fkey FOREIGN KEY (id_employe) REFERENCES public.employes(id_employe);
+
+
+--
+-- TOC entry 1955 (class 2606 OID 55861)
+-- Name: detail_commandes detail_commandes_id_commande_fkey; Type: FK CONSTRAINT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.detail_commandes
+    ADD CONSTRAINT detail_commandes_id_commande_fkey FOREIGN KEY (id_commande) REFERENCES public.commandes(id_commande);
+
+
+--
+-- TOC entry 1956 (class 2606 OID 55866)
+-- Name: detail_commandes detail_commandes_id_medoc_fkey; Type: FK CONSTRAINT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.detail_commandes
+    ADD CONSTRAINT detail_commandes_id_medoc_fkey FOREIGN KEY (id_medoc) REFERENCES public.medicaments(id_medoc);
+
+
+--
+-- TOC entry 1951 (class 2606 OID 55826)
+-- Name: detail_demandes detail_demandes_id_demande_fkey; Type: FK CONSTRAINT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.detail_demandes
+    ADD CONSTRAINT detail_demandes_id_demande_fkey FOREIGN KEY (id_demande) REFERENCES public.demandes(id_demande);
+
+
+--
+-- TOC entry 1952 (class 2606 OID 55831)
+-- Name: detail_demandes detail_demandes_id_medoc_fkey; Type: FK CONSTRAINT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.detail_demandes
+    ADD CONSTRAINT detail_demandes_id_medoc_fkey FOREIGN KEY (id_medoc) REFERENCES public.medicaments(id_medoc);
+
+
+--
+-- TOC entry 1948 (class 2606 OID 55801)
+-- Name: employes idService; Type: FK CONSTRAINT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.employes
+    ADD CONSTRAINT "idService" FOREIGN KEY (id_service) REFERENCES public.services(id_service);
+
+
+--
+-- TOC entry 1949 (class 2606 OID 55929)
+-- Name: employes role_fkey; Type: FK CONSTRAINT; Schema: public; Owner: guichard
+--
+
+ALTER TABLE ONLY public.employes
+    ADD CONSTRAINT role_fkey FOREIGN KEY (role) REFERENCES public.role(role);
+
+
+--
+-- TOC entry 2085 (class 0 OID 0)
+-- Dependencies: 6
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2022-04-01 09:32:47
+
+--
+-- PostgreSQL database dump complete
+--
+
