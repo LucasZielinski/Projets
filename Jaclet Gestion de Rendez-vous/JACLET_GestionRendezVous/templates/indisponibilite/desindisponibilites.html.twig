@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MedecinController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+	Liste des indisponibilites :
+    <ul>
+        {% for indisponibilite in indisponibilites %}
+			{% if indisponibilite.medecin.email==email %}
+				<li>{{ indisponibilite.dateheuredebut|date("m/d/Y") }} au {{ indisponibilite.dateheurefin|date("m/d/Y") }} - {{ indisponibilite.motif }} - {{ indisponibilite.medecin.email }}</li>
+			{% endif %}
+		{% else	%}
+			Pas de indisponibilite trouvée.
+		{% endfor %}
+    </ul>
+</div>
+{% endblock %}
