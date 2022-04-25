@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {# Run `composer require symfony/webpack-encore-bundle`
+           and uncomment the following Encore helpers to start using Symfony UX #}
+        {% block stylesheets %}
+            {#{{ encore_entry_link_tags('app') }}#}
+        {% endblock %}
+
+        {% block javascripts %}
+            {#{{ encore_entry_script_tags('app') }}#}
+        {% endblock %}
+    </head>
+	<style>
+		.menu{
+			display:flex;
+			padding:0;
+			background-color: #ccc;
+			justify-content:center;
+		}
+		
+		.menu li{
+			list-style-type:none;
+		}
+		
+		.menu a {
+			display:block;                
+			min-width: 120px;       
+			margin: 0.5rem;              
+			padding: 0.4rem 0;           
+			text-align: center;           
+			background-color: #1ABC9C;    
+			color: #fff;               
+			text-decoration: none;       
+			border: 1px solid #fff;      
+			border-radius: 4px;          
+		}
+		
+		body {
+			background-color: #91dbf2;
+		}
+		
+		h1 {
+			color: #FFFFFF;
+			margin: 1em auto;
+			font-size: 3.5em;
+			text-align: center;
+			font-family: Impact, fantasy;
+		}	
+		table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  border: 3px solid black;
+}
+
+thead th, tfoot th {
+  font-family: 'Rock Salt', cursive;
+}
+
+th {
+  letter-spacing: 2px;
+  border: thin solid black;
+}
+
+td {
+  letter-spacing: 1px;
+  border: thin solid black;
+}
+
+tbody td {
+  text-align: center;
+}
+
+tfoot th {
+  text-align: right;
+}
+	</style>
+    <body>
+		<ul class="menu">
+		<li><a href="{{path('accueil')}}">Accueil</a></li>
+		{% if is_granted('ROLE_USER') %}
+		<li><a href="{{path('patient')}}">Voir mes consultations</a></li>
+		<li><a href="{{path('creerConsultation')}}">Prendre un rendez-vous</a></li> 
+		{%endif%}		 
+		{% if is_granted('ROLE_MEDECIN')%}
+		<li><a href="{{path('validation')}}">Validation des consultations</a></li>
+		<li><a href="{{path('creerIndisponibilite')}}">Ajouter une indisponibilité</a></li>
+		<li><a href="{{path('indisponibilites')}}">Voir mes indisponibilités</a></li>
+		{%endif%}
+		{% if is_granted('ROLE_ASSISTANT')%}
+		<li><a href="{{path('validation')}}">Validation des consultations</a></li>	
+		{% endif %}	
+		<li>
+			{% if is_granted('IS_AUTHENTICATED_FULLY')%}
+					<a href="{{ path('app_logout')}}">Se déconnecter</a>
+			{%else%}
+					<a href="{{path('login')}}"> Se connecter </a>
+			{%endif%}
+		</li>
+		<li>
+			{% if is_granted('IS_AUTHENTICATED_FULLY')%}
+						Connecté en tant que {{app.user.email}}
+			{%endif%}
+		</li>
+		</ul>
+		<h1>Gestion des Rendez-Vous - Jaclet <img src="https://www.icone-png.com/png/51/51473.png" width="50" height="50"></h1>
+        {% block body %}{% endblock %}
+    </body>
+</html>

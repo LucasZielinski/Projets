@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PatientController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1> Rendez-vous de {{patient.getEmail()}} </h1>
+       
+        <table>
+            <tr>
+                <th>ID</th> 
+                <th>Date Heure</th> 
+                <th>Médecin</th> 
+                <th>Motif</th> 
+                <th>Etat</th> 
+            </tr>
+        {% for rdv in patient.getConsultations %}            
+            <tr>
+            <td> {{rdv.id}} </td>
+            <td> {{rdv.dateHeure | date('d/m/Y H:m')}} </td> 
+            <td> {{rdv.getMedecin().getEmail()}} </td>
+            <td> {{rdv.motif}} </td> 
+            <td> {{rdv.etat}} </td>
+            <td> <a href="{{path('modifConsultation',{id:rdv.id})}}"> Modifier </a> | <a href="{{path('removeConsultation',{id:rdv.id})}}"> Supprimer </a> </td> 
+            </tr>         
+        {% else %}
+            Aucun rendez vous trouvé
+        {% endfor %}
+            </table>
+</div>
+{% endblock %}
